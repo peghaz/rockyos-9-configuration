@@ -62,7 +62,8 @@ dnf install -y \
   strace \
   lsof \
   tcpdump \
-  nmap-ncat
+  nmap-ncat \
+  util-linux-user
 ```
 
 ---

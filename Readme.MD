@@ -85,16 +85,16 @@ dnf install -y \
   ncurses-devel \
   xz-devel \
   libuuid-devel \
-  gdbm-devel
+  gdbm-devel \
+  libpq-devel
 ```
 
 ---
 
-## 5. Install PostgreSQL Client Development Library
-
+## 5. Change the host machine name
 ```bash
-# Install libpq headers — required for building psycopg2 and other PostgreSQL drivers
-dnf install -y libpq-devel
+# Change the hostname (replace "new-hostname" with your desired hostname)
+hostnamectl set-hostname GPU24
 ```
 
 ---

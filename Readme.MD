@@ -260,7 +260,7 @@ nvidia-smi --query-gpu=driver_version --format=csv,noheader | head -n 1
 
 # Install the Fabric Manager at the EXACT same version (replace with your version)
 # Example: if driver is 595.58.03
-dnf install -y nvidia-fabric-manager-595.58.03
+dnf install -y nvidia-fabric-manager-xxx.yy.zz
 ```
 
 > **Warning:** Do not omit the version number. Running `dnf install nvidia-fabric-manager` without a version will pull the latest, which may not match your locked driver.

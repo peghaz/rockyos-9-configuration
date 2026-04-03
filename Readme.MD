@@ -63,7 +63,9 @@ dnf install -y \
   lsof \
   tcpdump \
   nmap-ncat \
-  util-linux-user
+  util-linux-user \
+  ncdu \
+  gdu
 ```
 
 ---
@@ -261,6 +263,16 @@ nvidia-smi --query-gpu=driver_version --format=csv,noheader | head -n 1
 # Install the Fabric Manager at the EXACT same version (replace with your version)
 # Example: if driver is 595.58.03
 dnf install -y nvidia-fabric-manager-xxx.yy.zz
+
+# If that doesn't work, try:
+dnf module install nvidia-driver/fm
+
+# Finally, enable version-locking for the Fabric Manager to prevent future mismatches:
+dnf versionlock add nvidia-fabric-manager*
+
+# Enable fabric manager and persistenced with systemctl
+systemctl enable --now nvidia-fabricmanager 
+systemctl enable --now nvidia-persistenced
 ```
 
 > **Warning:** Do not omit the version number. Running `dnf install nvidia-fabric-manager` without a version will pull the latest, which may not match your locked driver.

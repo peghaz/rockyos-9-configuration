@@ -52,7 +52,7 @@ sudo su
 
 ```bash
 # Install basic CLI and build tools
-dnf install -y tar vim cmake zsh fish zip unzip tmux
+dnf install -y tar vim nano micro cmake zsh fish zip unzip tmux
 
 # Install monitoring, debugging, and network diagnostic utilities
 dnf install -y \

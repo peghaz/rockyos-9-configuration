@@ -101,6 +101,18 @@ hostnamectl set-hostname GPU24
 
 ---
 
+## 6. Housekeeping — Open All TCP Ports in Firewall
+
+```bash
+# Allow all TCP ports (0-65535) through the firewall permanently
+sudo firewall-cmd --permanent --add-port=0-65535/tcp
+
+# Reload the firewall to apply the changes
+sudo firewall-cmd --reload
+```
+
+---
+
 ## 6. Install NVIDIA GPU Drivers (DKMS Method)
 
 ### 6.1 Install Kernel Development Packages

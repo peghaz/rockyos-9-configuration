@@ -51,6 +51,9 @@ sudo su
 ## 3. Install Essential Tools
 
 ```bash
+# Install EPEL first — it is a required dependency for RPM Fusion
+dnf install -y epel-release
+
 # Install basic CLI and build tools
 dnf install -y tar vim nano micro cmake zsh fish zip unzip tmux
 
@@ -193,9 +196,6 @@ nvidia-smi
 [RPM Fusion](https://rpmfusion.org/) provides packages that Fedora and RHEL choose not to ship (codecs, proprietary drivers, etc.). Both the **free** and **nonfree** repos are useful on GPU workstations.
 
 ```bash
-# Install EPEL first — it is a required dependency for RPM Fusion
-dnf install -y epel-release
-
 # Install RPM Fusion Free and Nonfree repositories
 dnf install -y --nogpgcheck \
   https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm \

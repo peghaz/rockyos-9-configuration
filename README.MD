@@ -68,7 +68,7 @@ dnf install -y \
   nmap-ncat \
   util-linux-user \
   ncdu \
-  gdu
+  keychain
 ```
 
 ---

@@ -449,3 +449,107 @@ ls /usr/share/zsh-antigen/antigen.zsh
 ```
 
 > **Next step:** Add `source /usr/share/zsh-antigen/antigen.zsh` to your `~/.zshrc` and configure your desired plugins and theme.
+**Enroll the TPM slot without PIN**.
+
+---
+
+# Appendices
+
+## Step 1 — Remove current TPM slot
+
+```bash
+sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p3
+```
+
+---
+
+## Step 2 — Re-enroll WITHOUT PIN
+
+```bash
+sudo systemd-cryptenroll \
+  --tpm2-device=auto \
+  --tpm2-pcrs=7 \
+  /dev/nvme0n1p3
+```
+
+⚠️ Notice:
+❌ no `--tpm2-with-pin=yes` if you don't want to enter PIN on bootup
+
+---
+
+## Step 3 — Verify slots
+
+```bash
+sudo systemd-cryptenroll /dev/nvme0n1p3
+```
+
+You should see:
+
+```
+SLOT TYPE
+0    password
+1    tpm2
+```
+
+(No mention of PIN)
+
+---
+
+## Step 4 — Ensure `/etc/crypttab` is correct
+
+```text
+luks-<UUID> UUID=<UUID> - tpm2-device=auto,discard
+```
+
+---
+
+## Step 5 — Rebuild initramfs
+
+```bash
+sudo dracut -f
+```
+
+---
+
+## Step 6 — Reboot
+
+```bash
+sudo reboot
+```
+
+---
+
+# ✅ Expected Result
+
+* No TPM PIN prompt
+* No LUKS password prompt
+* Fully automatic boot
+
+---
+
+# 🧠 Key Insight
+
+| Where PIN is defined    | Effect                            |
+| ----------------------- | --------------------------------- |
+| `--tpm2-with-pin=yes`   | Enforced by TPM → always required |
+| `crypttab tpm2-pin=yes` | Only controls prompting behavior  |
+
+👉 The **TPM slot itself is authoritative**
+
+---
+
+# 🔐 Final State After Fix
+
+```text
+TPM slot → auto unlock
+Password slot → fallback only
+```
+
+---
+
+# ✔ Final Answer
+
+👉 You are still seeing the PIN because it is **embedded in the TPM keyslot**
+👉 You must **wipe and re-enroll without PIN** to get zero-interaction boot
+
+---

@@ -455,10 +455,14 @@ ls /usr/share/zsh-antigen/antigen.zsh
 
 # Appendices
 
-## Step 1 — Remove current TPM slot
+## Step 1 — Check the encrypted disk ID (it will have LUKS in description) and remove its current TPM slot
 
 ```bash
-sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p3
+sudo lsblk -f # you will see /dev/nvme0n1pX (where X can be 2, 3)
+```
+
+```bash
+sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1pX
 ```
 
 ---
@@ -469,7 +473,7 @@ sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p3
 sudo systemd-cryptenroll \
   --tpm2-device=auto \
   --tpm2-pcrs=7 \
-  /dev/nvme0n1p3
+  /dev/nvme0n1pX
 ```
 
 ⚠️ Notice:
@@ -480,7 +484,7 @@ sudo systemd-cryptenroll \
 ## Step 3 — Verify slots
 
 ```bash
-sudo systemd-cryptenroll /dev/nvme0n1p3
+sudo systemd-cryptenroll /dev/nvme0n1pX
 ```
 
 You should see:
